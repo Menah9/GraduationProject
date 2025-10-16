@@ -1,0 +1,24 @@
+<odoo>
+  <data>
+    <!-- Root menu -->
+    <menuitem id="menu_gp_root" name="Chalets Management" sequence="10"/>
+
+    <!-- Chalets Action -->
+    <record id="action_gp_chalets" model="ir.actions.act_window">
+      <field name="name">Chalets</field>
+      <field name="res_model">gp.chalet</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Bookings Action -->
+    <record id="action_gp_bookings" model="ir.actions.act_window">
+      <field name="name">Bookings</field>
+      <field name="res_model">gp.booking</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Child menus -->
+    <menuitem id="menu_gp_chalets" name="Chalets" parent="menu_gp_root" action="action_gp_chalets" sequence="10"/>
+    <menuitem id="menu_gp_bookings" name="Bookings" parent="menu_gp_root" action="action_gp_bookings" sequence="20"/>
+  </data>
+</odoo>

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gp_chalet,access_gp_chalet,model_gp_chalet,,1,1,1,1
+access_gp_booking,access_gp_booking,model_gp_booking,,1,1,1,1
