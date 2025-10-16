@@ -5,7 +5,7 @@ FROM odoo:17.0
 USER root
 
 # انسخ إضافة "graduation" إلى مسار الإضافات
-COPY graduation /mnt/extra-addons/graduation
+COPY . /mnt/extra-addons/graduation
 
 # أعطي صلاحيات لـ odoo
 RUN chown -R odoo:odoo /mnt/extra-addons
