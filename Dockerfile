@@ -1,24 +1,28 @@
-# نستخدم الصورة الرسمية لـ Odoo 17
+# Odoo 17
 FROM odoo:17.0
 
-# ندخل الإضافة الخاصة في مجلد extra-addons
+# نستخدم root مؤقتاً لنسخ الموديول وتعديل الصلاحيات
 USER root
+
+# انسخ إضافة "graduation" إلى مسار الإضافات
 COPY graduation /mnt/extra-addons/graduation
+
+# أعطي صلاحيات لـ odoo
 RUN chown -R odoo:odoo /mnt/extra-addons
 
-# نرجّع المستخدم الافتراضي
+# ارجع لمستخدم odoo
 USER odoo
 
-# مسار الإضافات (الافتراضية + إضافتنا)
-ENV ADDONS_PATH=/usr/lib/python3/dist-packages/odoo/addons,/mnt/extra-addons
-
+# المنفذ الافتراضي
 EXPOSE 8069
 
-# نشغّل أودو مع متغيرات قاعدة البيانات من Render
-CMD ["odoo",
-     "--db_host=${DB_HOST}",
-     "--db_port=${DB_PORT}",
-     "--db_user=${DB_USER}",
-     "--db_password=${DB_PASSWORD}",
-     "--addons-path=/usr/lib/python3/dist-packages/odoo/addons,/mnt/extra-addons",
-     "--http-port=8069"]
+# شغّل Odoo واقرأ متغيرات البيئة من Render
+# استخدمنا shell form عشان يتم استبدال متغيرات البيئة ($DB_HOST...)
+CMD bash -lc 'odoo \
+  --db_host="$DB_HOST" \
+  --db_port="$DB_PORT" \
+  --db_user="$DB_USER" \
+  --db_password="$DB_PASSWORD" \
+  --addons-path=/usr/lib/python3/dist-packages/odoo/addons,/mnt/extra-addons \
+  --http-port=8069'
+
