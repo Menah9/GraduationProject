@@ -1,7 +1,17 @@
+# ملفات ومجلدات لا نريد نسخها للصورة
+.git
+.gitignore
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-.git
-.gitignore
-.DS_Store
+*.db
+*.sqlite3
+.env
+Dockerfile
+.dockerignore
+README*
+*.md
+*.log
+venv/
+node_modules/
