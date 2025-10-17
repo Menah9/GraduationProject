@@ -1,25 +1,21 @@
-# استخدم نسخة Odoo 17
+# استخدم صورة Odoo الرسمية
 FROM odoo:17
 
-# استخدم root لنسخ الملفات وتعديل الصلاحيات
-USER root
+# انسخي الموديول تبعك إلى مجلد الإضافات
+COPY graduation /mnt/extra-addons/graduation
 
-# انسخ ملفات المشروع (الإضافة)
-COPY . /mnt/extra-addons/graduation
+# عدّلي صلاحيات المجلد
+RUN chmod -R 777 /mnt/extra-addons/graduation
 
-# عدّل صلاحيات الملفات
-RUN chown -R odoo:odoo /mnt/extra-addons
+# تعريف المتغيرات البيئية
+ENV DB_HOST=${DB_HOST}
+ENV DB_PORT=${DB_PORT}
+ENV DB_USER=${DB_USER}
+ENV DB_PASSWORD=${DB_PASSWORD}
+ENV DB_NAME=${DB_NAME}
+ENV PORT=${PORT}
 
-# ارجع لمستخدم odoo
-USER odoo
-
-# إعداد مسار الإضافات
-ENV ADDONS_PATH=/usr/lib/python3/dist-packages/odoo/addons,/mnt/extra-addons
-
-# استخدم المنفذ الديناميكي من Render
-EXPOSE 8069
-
-# الأمر الرئيسي لتشغيل Odoo
+# شغّلي Odoo مع إعدادات قاعدة البيانات
 CMD ["odoo",
      "-d", "${DB_NAME}",
      "--db_host=${DB_HOST}",
@@ -28,5 +24,3 @@ CMD ["odoo",
      "--db_password=${DB_PASSWORD}",
      "--addons-path=/mnt/extra-addons",
      "--http-port=${PORT}"]
-
-
