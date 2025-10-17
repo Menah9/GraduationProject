@@ -1,29 +1,31 @@
-# Odoo 17
+# استخدم نسخة Odoo 17
 FROM odoo:17
 
-# نحتاج root عشان النسخ وتعديل التصاريح
+# استخدم root لنسخ الملفات وتعديل الصلاحيات
 USER root
 
-# انسخي الإضافة كلها (لأن الريبو جذرُه إضافة)
+# انسخ ملفات المشروع (الإضافة)
 COPY . /mnt/extra-addons/graduation
 
-# تصاريح
+# عدّل صلاحيات الملفات
 RUN chown -R odoo:odoo /mnt/extra-addons
 
-# ارجعي لمستخدم odoo
+# ارجع لمستخدم odoo
 USER odoo
 
-# مسار الإضافات
+# إعداد مسار الإضافات
 ENV ADDONS_PATH=/usr/lib/python3/dist-packages/odoo/addons,/mnt/extra-addons
 
-# (Render بيعطي PORT ديناميكي) لازم نستخدمه مع Odoo
-# ملاحظة: EXPOSE اختياري هون، الأهم إننا نشغّل Odoo على ${PORT}
+# استخدم المنفذ الديناميكي من Render
+EXPOSE 8069
+
+# الأمر الرئيسي لتشغيل Odoo
 CMD ["odoo",
-     "-d","${DB_NAME}",
-     "--db_host","${DB_HOST}",
-     "--db_port","${DB_PORT}",
-     "--db_user","${DB_USER}",
-     "--db_password","${DB_PASSWORD}",
-     "--addons-path","/usr/lib/python3/dist-packages/odoo/addons,/mnt/extra-addons",
-     "--http-port","${PORT}"
+     "-d", "${DB_NAME}",
+     "--db_host", "${DB_HOST}",
+     "--db_port", "${DB_PORT}",
+     "--db_user", "${DB_USER}",
+     "--db_password", "${DB_PASSWORD}",
+     "--addons-path", "/usr/lib/python3/dist-packages/odoo/addons,/mnt/extra-addons",
+     "--http-port", "${PORT}"
 ]
