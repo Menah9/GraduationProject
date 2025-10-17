@@ -16,11 +16,4 @@ ENV DB_NAME=${DB_NAME}
 ENV PORT=${PORT}
 
 # شغّلي Odoo مع إعدادات قاعدة البيانات
-CMD ["odoo",
-     "-d", "${DB_NAME}",
-     "--db_host=${DB_HOST}",
-     "--db_port=${DB_PORT}",
-     "--db_user=${DB_USER}",
-     "--db_password=${DB_PASSWORD}",
-     "--addons-path=/mnt/extra-addons",
-     "--http-port=${PORT}"]
+CMD ["odoo","-d","${DB_NAME}","--db_host=${DB_HOST}","--db_port=${DB_PORT}","--db_user=${DB_USER}","--db_password=${DB_PASSWORD}","--addons-path=/mnt/extra-addons","--http-port=${PORT}"]
